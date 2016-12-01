@@ -1,0 +1,54 @@
+[edit system]
+-  host-name vsrx;
++  host-name r1;
+[edit interfaces]
++   lo0 {
++       unit 0 {
++           family inet {
++               address 10.1.0.101/32;
++           }
++       }
++   }
+[edit]
++  routing-options {
++      rib inet.0 {
++          static {
++              route 10.0.0.0/8 discard;
++              route 172.16.0.0/12 discard;
++              route 192.168.0.0/16 discard;
++          }
++      }
++      router-id 10.1.0.101;
++      autonomous-system 65001;
++  }
++  protocols {
++      bgp {
++          group ebgp {
++              neighbor 10.1.14.104 {
++                  peer-as 65004;
++              }
++          }
++          group ibgp {
++              neighbor 10.1.0.102 {
++                  local-address 10.1.0.101;
++                  peer-as 65001;
++              }
++          }
++      }
++      ospf {
++          export ospf-redistribute-direct;
++          area 0.0.0.0 {
++              interface lo0.0;
++              interface ge-0/0/1.0;
++          }
++      }
++  }
++  policy-options {
++      policy-statement ospf-redistribute-direct {
++          from {
++              protocol direct;
++              interface ge-0/0/2.0;
++          }
++          then accept;
++      }
++  }

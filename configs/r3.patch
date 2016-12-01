@@ -1,0 +1,54 @@
+[edit system]
+-  host-name vsrx;
++  host-name r3;
+[edit interfaces]
++   lo0 {
++       unit 0 {
++           family inet {
++               address 10.3.0.103/32;
++           }
++       }
++   }
+[edit]
++  routing-options {
++      rib inet.0 {
++          static {
++              route 10.0.0.0/8 discard;
++              route 172.16.0.0/12 discard;
++              route 192.168.0.0/16 discard;
++              /* my-prefix */
++              route 10.3.0.0/16 discard;
++          }
++      }
++      router-id 10.3.0.103;
++      autonomous-system 65003;
++  }
++  protocols {
++      bgp {
++          group ebgp-to-g2 {
++              neighbor 10.173.176.102 {
++                  export advertise-my-prefixes;
++                  peer-as 65001;
++              }
++          }
++          group ebgp-to-rs {
++              neighbor 10.173.176.211 {
++                  authentication-key "$9$AsDstBEcSeWX-reJGDi.muOB1cyKM8"; ## SECRET-DATA
++                  export advertise-my-prefixes;
++                  peer-as 64686;
++              }
++          }
++      }
++  }
++  policy-options {
++      prefix-list my-prefixes {
++          10.3.0.0/16;
++      }
++      policy-statement advertise-my-prefixes {
++          from {
++              protocol static;
++              prefix-list-filter my-prefixes exact;
++          }
++          then accept;
++      }
++  }

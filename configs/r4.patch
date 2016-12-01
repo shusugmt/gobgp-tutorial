@@ -1,0 +1,47 @@
+[edit system]
+-  host-name vsrx;
++  host-name r4;
+[edit interfaces]
++   lo0 {
++       unit 0 {
++           family inet {
++               address 10.4.0.104/32;
++           }
++       }
++   }
+[edit]
++  routing-options {
++      rib inet.0 {
++          static {
++              route 10.0.0.0/8 discard;
++              route 172.16.0.0/12 discard;
++              route 192.168.0.0/16 discard;
++              /* my-prefix */
++              route 10.4.0.0/16 discard;
++          }
++      }
++      router-id 10.4.0.104;
++      autonomous-system 65004;
++  }
++  protocols {
++      bgp {
++          group ebgp {
++              neighbor 10.1.14.101 {
++                  export advertise-my-prefixes;
++                  peer-as 65001;
++              }
++          }
++      }
++  }
++  policy-options {
++      prefix-list my-prefixes {
++          10.4.0.0/16;
++      }
++      policy-statement advertise-my-prefixes {
++          from {
++              protocol static;
++              prefix-list-filter my-prefixes exact;
++          }
++          then accept;
++      }
++  }
