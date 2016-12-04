@@ -68,6 +68,7 @@ Vagrant.configure(2) do |config|
       hostnamectl set-hostname util
       systemctl restart rsyslog
     EOS
+    util.vm.provision "shell", privileged: true, path: "prov/setup_util.sh"
   end
 
 end
