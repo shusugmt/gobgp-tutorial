@@ -8,7 +8,7 @@ Vagrant.configure(2) do |config|
     g2.vm.network "private_network", ip: "10.1.12.102",    virtualbox__intnet: "gobgp-t_1-to-2"
     g2.vm.provider "virtualbox" do |v|
       v.cpus = 2
-      v.memory = 1024
+      v.memory = 512
     end
     g2.vm.provision "shell", privileged: true, inline: <<-EOS
       grep 127.0.1.2 /etc/hosts || echo 127.0.1.2 g2 >> /etc/hosts
@@ -24,18 +24,27 @@ Vagrant.configure(2) do |config|
     r1.vm.box = "juniper/ffp-12.1X47-D15.4-packetmode"
     r1.vm.network "private_network", ip: "10.1.12.101",  virtualbox__intnet: "gobgp-t_1-to-2"
     r1.vm.network "private_network", ip: "10.1.14.101",  virtualbox__intnet: "gobgp-t_1-to-4"
+    r1.vm.provider "virtualbox" do |v|
+      v.memory = 512
+    end
   end
 
   # r3 junos
   config.vm.define :r3 do |r3|
     r3.vm.box = "juniper/ffp-12.1X47-D15.4-packetmode"
     r3.vm.network "private_network", ip: "10.173.176.103", virtualbox__intnet: "gobgp-t_ix"
+    r3.vm.provider "virtualbox" do |v|
+      v.memory = 512
+    end
   end
 
   # r4 junos
   config.vm.define :r4 do |r4|
     r4.vm.box = "juniper/ffp-12.1X47-D15.4-packetmode"
     r4.vm.network "private_network", ip: "10.1.14.104",  virtualbox__intnet: "gobgp-t_1-to-4"
+    r4.vm.provider "virtualbox" do |v|
+      v.memory = 512
+    end
   end
 
   config.vm.define :rs do |rs|
@@ -44,7 +53,7 @@ Vagrant.configure(2) do |config|
     rs.vm.network "private_network", ip: "10.173.176.211", virtualbox__intnet: "gobgp-t_ix"
     rs.vm.provider "virtualbox" do |v|
       v.cpus = 2
-      v.memory = 1024
+      v.memory = 512
     end
     rs.vm.provision "shell", privileged: true, inline: <<-EOS
       grep 127.0.1.2 /etc/hosts || echo 127.0.1.2 rs >> /etc/hosts
@@ -61,7 +70,7 @@ Vagrant.configure(2) do |config|
     util.vm.network "private_network", ip: "10.254.0.250",   virtualbox__intnet: "gobgp-t_util"
     util.vm.provider "virtualbox" do |v|
       v.cpus = 2
-      v.memory = 1024
+      v.memory = 512
     end
     util.vm.provision "shell", privileged: true, inline: <<-EOS
       grep 127.0.1.2 /etc/hosts || echo 127.0.1.2 util >> /etc/hosts
