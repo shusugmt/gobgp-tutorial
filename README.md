@@ -45,6 +45,8 @@ Tested on Mac OS X but should work on both Windows/Linux too. If you find any pr
 4. Configure three vSRX routers (r1,r3,r4)
     - run `util/upload_junos_configs.sh`
 
+If you encounter "time delay" problem with vSRX boxes (most likely to happen when you are using laptop pc and the host machine get into sleep mode) you can setup periodically (every 10 min) `ntpdate` with cron by running `util/set_junos_ntpdate.sh` onto those boxes.
+
 
 ## What should do next?
 
