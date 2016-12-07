@@ -42,17 +42,8 @@ Tested on Mac OS X but should work on both Windows/Linux too. If you find any pr
 2. `cd gobgp-tutorial`
 3. `vagrant up`
     - Take a while...
-4. Load vSRX configuration
-    1. run `util/upload_junos_configs.sh`
-        - This will upload config patch files to all three (r1,r3,r4) vSRX routers
-    2. login to one router via `vagrant ssh r1`
-    3. enter configuration mode
-        - `cli`
-        - `configure`
-    4. apply patch
-        - `load patch r1.patch`
-        - `commit`
-    5. repeat 2-4 for all three routers
+4. Configure three vSRX routers (r1,r3,r4)
+    - run `util/upload_junos_configs.sh`
 
 
 ## What should do next?
