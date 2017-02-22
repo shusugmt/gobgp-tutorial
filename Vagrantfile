@@ -1,8 +1,7 @@
 Vagrant.configure(2) do |config|
   # g2 (GoBGP)
   config.vm.define :g2 do |g2|
-    g2.vm.box = "bento/debian-8.5"
-    g2.vm.box_version = "< 2.3.0"
+    g2.vm.box = "bento/debian-8.7"
     g2.vm.network "private_network", ip: "10.254.0.102",   virtualbox__intnet: "gobgp-t_util"
     g2.vm.network "private_network", ip: "10.173.176.102", virtualbox__intnet: "gobgp-t_ix"
     g2.vm.network "private_network", ip: "10.1.12.102",    virtualbox__intnet: "gobgp-t_1-to-2"
@@ -48,8 +47,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define :rs do |rs|
-    rs.vm.box = "bento/debian-8.5"
-    rs.vm.box_version = "< 2.3.0"
+    rs.vm.box = "bento/debian-8.7"
     rs.vm.network "private_network", ip: "10.173.176.211", virtualbox__intnet: "gobgp-t_ix"
     rs.vm.provider "virtualbox" do |v|
       v.cpus = 2
@@ -65,8 +63,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define :util do |util|
-    util.vm.box = "bento/debian-8.5"
-    util.vm.box_version = "< 2.3.0"
+    util.vm.box = "bento/debian-8.7"
     util.vm.network "private_network", ip: "10.254.0.250",   virtualbox__intnet: "gobgp-t_util"
     util.vm.provider "virtualbox" do |v|
       v.cpus = 2
