@@ -26,13 +26,13 @@ This was presented at IX.br Forum 10 (Sao Paulo, Dec 2016)
 
 ## Prerequisites
 
-- VirtualBox
-- Vagrant
+- VirtualBox 5.1.12 r112440
+- Vagrant 1.9.1
 - following Vagrant plugins (for vSRX box)
-    - vagrant-host-shell
-    - vagrant-junos
+    - vagrant-host-shell 0.0.4
+    - vagrant-junos 0.2.1
 
-Tested on Mac OS X but should work on both Windows/Linux too. If you find any problem, please report it through opening an issue.
+Tested on my MacBook Pro running  Mac OS X El Captan 10.11.6, but should work on both Windows/Linux too. If you find any problem, please report it through opening an issue.
 
 
 ## Getting started
